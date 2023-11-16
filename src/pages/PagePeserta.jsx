@@ -5,35 +5,23 @@ import WidgetCommonHumanDate from "../components/WidgetCommonHumanDate";
 import WidgetNavbar from "../components/WidgetNavbar";
 import { WidgetPesertaAdd } from "../components/WidgetPesertaAdd";
 import { WidgetPesertaEdit } from "../components/WidgetPesertaEdit";
-import configApi from "../config.api";
+import userApi from "../api/userApi";
 
 const PagePeserta = () => {
   const [pesertaList, setPesertaList] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const checkToken = async () => {
+    const checkStatusToken = async () => {
       try {
-        const response = await fetch(`${configApi.BASE_URL}/user/check-token`, {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "x-access-token": localStorage.getItem("token"),
-          },
-        });
-
-        if (response.ok) {
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
+        const response = await userApi.checkToken();
+        setIsLoggedIn(response);
       } catch (error) {
         console.error("Error:", error);
-        setIsLoggedIn(false);
       }
     };
 
-    checkToken();
+    checkStatusToken();
   }, []);
 
   useEffect(() => {

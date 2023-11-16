@@ -22,4 +22,28 @@ const signIn = async (user) => {
   }
 };
 
-export default { signIn };
+const checkToken = async () => {
+  try {
+    const response = await fetch(`${configApi.BASE_URL}/user/check-token`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
+
+    if (response.ok) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    return false;
+  }
+};
+
+export default {
+  signIn,
+  checkToken,
+};

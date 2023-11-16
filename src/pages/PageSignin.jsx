@@ -3,7 +3,6 @@ import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import UserModel from "../models/UserModel";
 import { useNavigate } from "react-router-dom";
 import userApi from "../api/userApi";
-import configApi from "../config.api";
 
 const PageSignin = () => {
   let navigate = useNavigate();
@@ -11,28 +10,16 @@ const PageSignin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const checkToken = async () => {
+    const checkStatusToken = async () => {
       try {
-        const response = await fetch(`${configApi.BASE_URL}/user/check-token`, {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "x-access-token": localStorage.getItem("token"),
-          },
-        });
-
-        if (response.ok) {
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
+        const response = await userApi.checkToken();
+        setIsLoggedIn(response);
       } catch (error) {
         console.error("Error:", error);
-        setIsLoggedIn(false);
       }
     };
 
-    checkToken();
+    checkStatusToken();
   }, []);
 
   const handleInput = (e) => {
