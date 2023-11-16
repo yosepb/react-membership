@@ -1,12 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import UserModel from "../models/UserModel";
 import { useNavigate } from "react-router-dom";
 import userApi from "../api/userApi";
+import configApi from "../config.api";
 
 const PageSignin = () => {
   let navigate = useNavigate();
   const [user, setUser] = useState(UserModel);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const response = await fetch(`${configApi.BASE_URL}/user/check-token`, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "x-access-token": localStorage.getItem("token"),
+          },
+        });
+
+        if (response.ok) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        setIsLoggedIn(false);
+      }
+    };
+
+    checkToken();
+  }, []);
 
   const handleInput = (e) => {
     const name = e.target.name;
@@ -23,7 +50,7 @@ const PageSignin = () => {
     }
   };
 
-  return (
+  return !isLoggedIn ? (
     <>
       <Container>
         <Row className="vh-100 d-flex justify-content-center align-items-center">
@@ -66,6 +93,8 @@ const PageSignin = () => {
         </Row>
       </Container>
     </>
+  ) : (
+    navigate("/kelas")
   );
 };
 
