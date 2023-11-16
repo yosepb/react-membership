@@ -57,7 +57,7 @@ const PageKelas = () => {
               <th>Nama Trainer</th>
               <th>Tanggal Mulai</th>
               <th>Status</th>
-              <th colSpan={2}>Aksi</th>
+              <th colSpan={1}>Aksi</th>
             </tr>
           </thead>
           <tbody>
@@ -69,14 +69,6 @@ const PageKelas = () => {
                   <WidgetCommonHumanDate date={kelas.tanggalMulai} />
                 </td>
                 <td>{kelas.isActive ? "Aktif" : "Tidak"}</td>
-                <td>
-                  <Button
-                    variant="info"
-                    onClick={() => updateKelasById(kelas._id)}
-                  >
-                    Lihat
-                  </Button>
-                </td>
                 <td>
                   <Button
                     variant="warning"

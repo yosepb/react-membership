@@ -1,8 +1,8 @@
 export default {
   nama: "",
   alamat: "",
-  isActive: true,
-  tanggalGabung: "",
+  isActive: false,
+  tanggalGabung: null,
   username: "",
   kelas_id: [],
 };

@@ -17,7 +17,6 @@ const PageSignin = () => {
   const signIn = async () => {
     try {
       await userApi.signIn(user);
-      //   kalo berhasil signIn bakal ngarahin ke halaman
       navigate("/kelas");
     } catch (error) {
       alert(error);

@@ -1,6 +1,6 @@
 import configApi from "../config.api";
 
-const createPeserta = async (pesertaData) => {
+const createPeserta = async (peserta) => {
   try {
     const response = await fetch(`${configApi.BASE_URL}/peserta`, {
       method: "POST",
@@ -9,7 +9,7 @@ const createPeserta = async (pesertaData) => {
         "Content-Type": "application/json",
         "x-access-token": localStorage.getItem("token"),
       },
-      body: JSON.stringify(pesertaData),
+      body: JSON.stringify(peserta),
     });
 
     if (!response.ok) {

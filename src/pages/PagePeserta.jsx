@@ -4,6 +4,7 @@ import PesertaModel from "../models/PesertaModel";
 import pesertaApi from "../api/pesertaApi";
 import WidgetCommonHumanDate from "../components/WidgetCommonHumanDate";
 import WidgetNavbar from "../components/WidgetNavbar";
+import { WidgetPesertaAdd } from "../components/WidgetPesertaAdd";
 
 const PagePeserta = () => {
   const [pesertaList, setPesertaList] = useState([]);
@@ -16,17 +17,6 @@ const PagePeserta = () => {
     try {
       const pesertaList = await pesertaApi.getPesertaList();
       setPesertaList(pesertaList);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const createNewPeserta = async () => {
-    const newPesertaData = { ...PesertaModel };
-
-    try {
-      const createdPeserta = await pesertaApi.createPeserta(newPesertaData);
-      console.log("Peserta created:", createdPeserta);
     } catch (error) {
       console.error(error);
     }
@@ -46,20 +36,28 @@ const PagePeserta = () => {
     }
   };
 
+  const pesertaAddListener = (e) => {
+    if (e.detail.status) {
+      pesertaApi.getPesertaList();
+    } else {
+      alert(e.detail.error);
+    }
+  };
+
   return (
     <>
       <WidgetNavbar />
       <Container className="mt-4">
-        <Button variant="primary" onClick={createNewPeserta}>
-          Buat Peserta Baru
-        </Button>
+        <WidgetPesertaAdd eventListener={pesertaAddListener} />
+
         <Table striped bordered hover className="mt-4">
           <thead>
             <tr>
               <th>Nama Peserta</th>
               <th>Alamat</th>
               <th>Tanggal Gabung</th>
-              <th>Peserta</th>
+              <th>Status</th>
+              <th>Username</th>
               <th colSpan={3}>Aksi</th>
             </tr>
           </thead>
@@ -71,10 +69,11 @@ const PagePeserta = () => {
                 <td>
                   <WidgetCommonHumanDate date={peserta.tanggalGabung} />
                 </td>
-                <td>array username [{peserta.username}]</td>
+                <td>{peserta.isActive ? "Aktif" : "Tidak"}</td>
+                <td>{peserta.username}</td>
                 <td>
                   <Button
-                    variant="primary"
+                    variant="info"
                     onClick={() => updatePesertaById(peserta._id)}
                   >
                     Lihat
@@ -82,18 +81,10 @@ const PagePeserta = () => {
                 </td>
                 <td>
                   <Button
-                    variant="success"
+                    variant="warning"
                     onClick={() => updatePesertaById(peserta._id)}
                   >
                     Edit
-                  </Button>
-                </td>
-                <td>
-                  <Button
-                    variant="danger"
-                    onClick={() => updatePesertaById(peserta._id)}
-                  >
-                    X
                   </Button>
                 </td>
               </tr>
