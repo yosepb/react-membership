@@ -79,6 +79,16 @@ export const WidgetPesertaAdd = () => {
                   />
                 </InputGroup>
 
+                <Form.Label>Username</Form.Label>
+                <InputGroup className="mb-3">
+                  <Form.Control
+                    placeholder="Username"
+                    name="username"
+                    value={peserta.username}
+                    onChange={(value) => handlePeserta("username", value)}
+                  />
+                </InputGroup>
+
                 <Form.Group className="mb-3">
                   <Form.Check
                     label="Peserta Aktif ?"

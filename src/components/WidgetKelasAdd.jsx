@@ -79,6 +79,16 @@ export const WidgetKelasAdd = () => {
                   />
                 </InputGroup>
 
+                <Form.Label>Username</Form.Label>
+                <InputGroup className="mb-3">
+                  <Form.Control
+                    placeholder="Username"
+                    name="username"
+                    value={kelas.username}
+                    onChange={(value) => handleKelas("username", value)}
+                  />
+                </InputGroup>
+
                 <Form.Group className="mb-3">
                   <Form.Check
                     label="Kelas Aktif ?"
