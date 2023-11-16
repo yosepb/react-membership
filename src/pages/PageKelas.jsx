@@ -43,7 +43,7 @@ const PageKelas = () => {
               <th>Nama Trainer</th>
               <th>Tanggal Mulai</th>
               <th>Status</th>
-              <th colSpan={1}>Aksi</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody>

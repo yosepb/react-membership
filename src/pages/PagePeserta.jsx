@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Button, Table, Container } from "react-bootstrap";
-import PesertaModel from "../models/PesertaModel";
+import { Table, Container } from "react-bootstrap";
 import pesertaApi from "../api/pesertaApi";
 import WidgetCommonHumanDate from "../components/WidgetCommonHumanDate";
 import WidgetNavbar from "../components/WidgetNavbar";
 import { WidgetPesertaAdd } from "../components/WidgetPesertaAdd";
+import { WidgetPesertaEdit } from "../components/WidgetPesertaEdit";
 
 const PagePeserta = () => {
   const [pesertaList, setPesertaList] = useState([]);
@@ -17,20 +17,6 @@ const PagePeserta = () => {
     try {
       const pesertaList = await pesertaApi.getPesertaList();
       setPesertaList(pesertaList);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const updatePesertaById = async (pesertaId) => {
-    const updatedPesertaData = { ...PesertaModel };
-
-    try {
-      const updatedPeserta = await pesertaApi.updatePeserta(
-        pesertaId,
-        updatedPesertaData
-      );
-      console.log("Peserta updated:", updatedPeserta);
     } catch (error) {
       console.error(error);
     }
@@ -58,7 +44,7 @@ const PagePeserta = () => {
               <th>Tanggal Gabung</th>
               <th>Status</th>
               <th>Username</th>
-              <th colSpan={3}>Aksi</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
@@ -72,20 +58,7 @@ const PagePeserta = () => {
                 <td>{peserta.isActive ? "Aktif" : "Tidak"}</td>
                 <td>{peserta.username}</td>
                 <td>
-                  <Button
-                    variant="info"
-                    onClick={() => updatePesertaById(peserta._id)}
-                  >
-                    Lihat
-                  </Button>
-                </td>
-                <td>
-                  <Button
-                    variant="warning"
-                    onClick={() => updatePesertaById(peserta._id)}
-                  >
-                    Edit
-                  </Button>
+                  <WidgetPesertaEdit pesertaId={peserta._id} />
                 </td>
               </tr>
             ))}
