@@ -1,8 +1,9 @@
-import "./App.css";
+// import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PageLayout from "./pages/PageLayout";
 import PageSignin from "./pages/PageSignin";
-import WidgetKelas from "./components/WidgetKelas";
+import PageKelas from "./pages/PageKelas";
+import PagePeserta from "./pages/PagePeserta";
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
         <Routes>
           <Route path="/" element={<PageLayout />}>
             <Route index element={<PageSignin />} />
-            <Route path="/kelas" element={<WidgetKelas />} />
+            <Route path="/kelas" element={<PageKelas />} />
+            <Route path="/peserta" element={<PagePeserta />} />
             {/* Customer */}
             {/* <Route index element={<MainPages />} />
             <Route path="/detail/:mobilId" element={<PageDetailCar />} /> */}

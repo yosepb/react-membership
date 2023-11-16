@@ -1,15 +1,15 @@
 import configApi from "../config.api";
 
-const createKelas = async (kelas) => {
+const createPeserta = async (pesertaData) => {
   try {
-    const response = await fetch(`${configApi.BASE_URL}/kelas`, {
+    const response = await fetch(`${configApi.BASE_URL}/peserta`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         "x-access-token": localStorage.getItem("token"),
       },
-      body: JSON.stringify(kelas),
+      body: JSON.stringify(pesertaData),
     });
 
     if (!response.ok) {
@@ -23,9 +23,9 @@ const createKelas = async (kelas) => {
   }
 };
 
-const getKelasList = async () => {
+const getPesertaList = async () => {
   try {
-    const response = await fetch(`${configApi.BASE_URL}/kelas`, {
+    const response = await fetch(`${configApi.BASE_URL}/peserta`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -38,16 +38,16 @@ const getKelasList = async () => {
       throw new Error(`Error! status: ${response.status}`);
     }
 
-    const kelasList = await response.json();
-    return kelasList;
+    const pesertaList = await response.json();
+    return pesertaList;
   } catch (error) {
     throw new Error(error);
   }
 };
 
-const getKelasById = async (kelasId) => {
+const getPesertaById = async (pesertaId) => {
   try {
-    const response = await fetch(`${configApi.BASE_URL}/kelas/${kelasId}`, {
+    const response = await fetch(`${configApi.BASE_URL}/peserta/${pesertaId}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -60,38 +60,38 @@ const getKelasById = async (kelasId) => {
       throw new Error(`Error! status: ${response.status}`);
     }
 
-    const kelas = await response.json();
-    return kelas;
+    const peserta = await response.json();
+    return peserta;
   } catch (error) {
     throw new Error(error);
   }
 };
 
-const updateKelas = async (kelasId, kelasData) => {
+const updatePeserta = async (pesertaId, pesertaData) => {
   try {
-    const response = await fetch(`${configApi.BASE_URL}/kelas/${kelasId}`, {
+    const response = await fetch(`${configApi.BASE_URL}/peserta/${pesertaId}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(kelasData),
+      body: JSON.stringify(pesertaData),
     });
 
     if (!response.ok) {
       throw new Error(`Error! status: ${response.status}`);
     }
 
-    const updatedKelas = await response.json();
-    return updatedKelas;
+    const updatedPeserta = await response.json();
+    return updatedPeserta;
   } catch (error) {
     throw new Error(error);
   }
 };
 
 export default {
-  createKelas,
-  getKelasList,
-  getKelasById,
-  updateKelas,
+  createPeserta,
+  getPesertaList,
+  getPesertaById,
+  updatePeserta,
 };

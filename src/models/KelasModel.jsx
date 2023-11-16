@@ -1,10 +1,11 @@
 export default {
   nama: "",
   namaTrainer: "",
-  tanggalMulai: "",
-  isActive: true,
-  username: "",
+  tanggalMulai: null,
+  isActive: false,
+  peserta_id: [],
+  username: [],
 };
 
-// apakah username harus array '[]' ?
-// soalnya kelas pasti punya banyak username
+// kelas punya peserta_id banyak, untuk target input data ke endpoint Member
+// kelas punya username banyak, untuk ditampilkan
