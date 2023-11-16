@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Button, Table, Container } from "react-bootstrap";
-import KelasModel from "../models/KelasModel";
+import { Table, Container } from "react-bootstrap";
 import kelasApi from "../api/kelasApi";
 import WidgetCommonHumanDate from "../components/WidgetCommonHumanDate";
 import WidgetNavbar from "../components/WidgetNavbar";
 import { WidgetKelasAdd } from "../components/WidgetKelasAdd";
+import { WidgetKelasEdit } from "../components/WidgetKelasEdit";
 
 const PageKelas = () => {
   const [kelasList, setKelasList] = useState([]);
@@ -17,20 +17,6 @@ const PageKelas = () => {
     try {
       const kelasList = await kelasApi.getKelasList();
       setKelasList(kelasList);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const updateKelasById = async (kelasId) => {
-    const updatedKelasData = { ...KelasModel };
-
-    try {
-      const updatedKelas = await kelasApi.updateKelas(
-        kelasId,
-        updatedKelasData
-      );
-      console.log("Kelas updated:", updatedKelas);
     } catch (error) {
       console.error(error);
     }
@@ -70,12 +56,7 @@ const PageKelas = () => {
                 </td>
                 <td>{kelas.isActive ? "Aktif" : "Tidak"}</td>
                 <td>
-                  <Button
-                    variant="warning"
-                    onClick={() => updateKelasById(kelas._id)}
-                  >
-                    Edit
-                  </Button>
+                  <WidgetKelasEdit kelasId={kelas._id} />
                 </td>
               </tr>
             ))}
