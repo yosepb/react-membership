@@ -31,6 +31,8 @@ export const WidgetKelasAdd = () => {
   const createNewKelas = async () => {
     try {
       await kelasApi.createKelas(kelas);
+      handleClose();
+      setKelas(KelasModel);
       Swal.fire("Good job!", "Adding new data successfully!", "success");
     } catch (error) {
       Swal.fire({

@@ -11,7 +11,7 @@ const PagePeserta = () => {
 
   useEffect(() => {
     fetchPesertaList();
-  }, []);
+  }, [pesertaList]);
 
   const fetchPesertaList = async () => {
     try {
@@ -22,19 +22,11 @@ const PagePeserta = () => {
     }
   };
 
-  const pesertaAddListener = (e) => {
-    if (e.detail.status) {
-      pesertaApi.getPesertaList();
-    } else {
-      alert(e.detail.error);
-    }
-  };
-
   return (
     <>
       <WidgetNavbar />
       <Container className="mt-4">
-        <WidgetPesertaAdd eventListener={pesertaAddListener} />
+        <WidgetPesertaAdd />
 
         <Table striped bordered hover className="mt-4">
           <thead>

@@ -31,6 +31,8 @@ export const WidgetPesertaAdd = () => {
   const createNewPeserta = async () => {
     try {
       await pesertaApi.createPeserta(peserta);
+      setPeserta(PesertaModel);
+      handleClose();
       Swal.fire("Good job!", "Adding new data successfully!", "success");
     } catch (error) {
       Swal.fire({

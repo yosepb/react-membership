@@ -32,6 +32,7 @@ export const WidgetKelasEdit = ({ kelasId }) => {
   const updateKelasById = async (kelasId) => {
     try {
       await kelasApi.updateKelas(kelasId, kelas);
+      handleClose();
       Swal.fire("Good job!", "Editing data successfully!", "success");
     } catch (error) {
       Swal.fire({

@@ -11,7 +11,7 @@ const PageKelas = () => {
 
   useEffect(() => {
     fetchKelasList();
-  }, []);
+  }, [kelasList]);
 
   const fetchKelasList = async () => {
     try {

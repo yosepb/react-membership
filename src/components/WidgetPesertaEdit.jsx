@@ -12,7 +12,6 @@ export const WidgetPesertaEdit = ({ pesertaId }) => {
   const [peserta, setPeserta] = useState(PesertaModel);
   const [show, setShow] = useState(false);
 
-  // kelas list -------------->
   const [kelasList, setKelasList] = useState([]);
 
   useEffect(() => {
@@ -27,7 +26,6 @@ export const WidgetPesertaEdit = ({ pesertaId }) => {
       console.error(error);
     }
   };
-  // kelas list -------------->
 
   const handleClose = () => {
     setShow(false);
@@ -35,21 +33,35 @@ export const WidgetPesertaEdit = ({ pesertaId }) => {
 
   const handleShow = () => setShow(true);
 
-  const handlePeserta = (name, e) => {
-    let value;
-
+  const handlePeserta = (name, value) => {
     if (name === "tanggalGabung") {
-      value = e;
-    } else {
-      value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
-    }
+      setPeserta((values) => ({ ...values, [name]: value }));
+    } else if (name === "isActive") {
+      setPeserta((values) => ({ ...values, [name]: value.target.checked }));
+    } else if (name === "kelas_id") {
+      const kelasId = value.target.id;
+      const isChecked = value.target.checked;
 
-    setPeserta((values) => ({ ...values, [name]: value }));
+      setPeserta((values) => {
+        let updatedKelasId;
+
+        if (isChecked) {
+          updatedKelasId = [...values.kelas_id, kelasId];
+        } else {
+          updatedKelasId = values.kelas_id.filter((id) => id !== kelasId);
+        }
+
+        return { ...values, kelas_id: updatedKelasId };
+      });
+    } else {
+      setPeserta((values) => ({ ...values, [name]: value.target.value }));
+    }
   };
 
   const updatePesertaById = async (pesertaId) => {
     try {
       await pesertaApi.updatePeserta(pesertaId, peserta);
+      handleClose();
       Swal.fire("Good job!", "Editing data successfully!", "success");
     } catch (error) {
       Swal.fire({
@@ -134,15 +146,27 @@ export const WidgetPesertaEdit = ({ pesertaId }) => {
                     name="tanggalGabung"
                   />
                 </InputGroup>
-
-                <Form.Label>Member dari Kelas</Form.Label>
+                <hr />
+                <Form.Label>
+                  <b> Member dari Kelas</b>
+                </Form.Label>
+                <span className="d-block mb-3 text-danger">
+                  <i>*cek untuk menambah, uncek untuk menghapus</i>
+                </span>
                 <Form>
                   {kelasList.map(
                     (kelas) =>
                       kelas.isActive && (
                         <div key={kelas._id} className="mb-3">
                           <Form.Check id={kelas._id}>
-                            <Form.Check.Input type="checkbox" />
+                            <Form.Check.Input
+                              type="checkbox"
+                              checked={peserta.kelas_id.includes(kelas._id)}
+                              onChange={(value) =>
+                                handlePeserta("kelas_id", value)
+                              }
+                              id={kelas._id}
+                            />
                             <Form.Check.Label>{kelas.nama}</Form.Check.Label>
                           </Form.Check>
                         </div>

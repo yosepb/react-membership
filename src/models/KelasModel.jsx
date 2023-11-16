@@ -3,8 +3,7 @@ export default {
   namaTrainer: "",
   tanggalMulai: null,
   isActive: false,
-  peserta_id: [],
-  username: [],
+  username: "",
 };
 
 // kelas punya peserta_id banyak, untuk target input data ke endpoint Member
