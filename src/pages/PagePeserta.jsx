@@ -31,24 +31,24 @@ const PagePeserta = () => {
         <Table striped bordered hover className="mt-4">
           <thead>
             <tr>
+              <th>Username</th>
               <th>Nama Peserta</th>
               <th>Alamat</th>
               <th>Tanggal Gabung</th>
               <th>Status</th>
-              <th>Username</th>
               <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
             {pesertaList.map((peserta) => (
               <tr key={peserta._id}>
+                <td>{peserta.username}</td>
                 <td>{peserta.nama}</td>
                 <td>{peserta.alamat}</td>
                 <td>
                   <WidgetCommonHumanDate date={peserta.tanggalGabung} />
                 </td>
                 <td>{peserta.isActive ? "Aktif" : "Tidak"}</td>
-                <td>{peserta.username}</td>
                 <td>
                   <WidgetPesertaEdit pesertaId={peserta._id} />
                 </td>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Modal, Row, Col, Form, InputGroup } from "react-bootstrap";
 import PesertaModel from "../models/PesertaModel";
 import pesertaApi from "../api/pesertaApi";
@@ -35,11 +35,7 @@ export const WidgetPesertaAdd = () => {
       handleClose();
       Swal.fire("Good job!", "Adding new data successfully!", "success");
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: error,
-      });
+      Swal.fire({ icon: "error", title: "Oops...", text: error });
     }
   };
 
