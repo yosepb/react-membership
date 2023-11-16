@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Modal, Row, Col, Form, InputGroup } from "react-bootstrap";
 import PesertaModel from "../models/PesertaModel";
 import pesertaApi from "../api/pesertaApi";
+import kelasApi from "../api/kelasApi";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { parseISO } from "date-fns";
@@ -10,6 +11,23 @@ import Swal from "sweetalert2";
 export const WidgetPesertaEdit = ({ pesertaId }) => {
   const [peserta, setPeserta] = useState(PesertaModel);
   const [show, setShow] = useState(false);
+
+  // kelas list -------------->
+  const [kelasList, setKelasList] = useState([]);
+
+  useEffect(() => {
+    fetchKelasList();
+  }, []);
+
+  const fetchKelasList = async () => {
+    try {
+      const kelasList = await kelasApi.getKelasList();
+      setKelasList(kelasList);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  // kelas list -------------->
 
   const handleClose = () => {
     setShow(false);
@@ -116,6 +134,21 @@ export const WidgetPesertaEdit = ({ pesertaId }) => {
                     name="tanggalGabung"
                   />
                 </InputGroup>
+
+                <Form.Label>Member dari Kelas</Form.Label>
+                <Form>
+                  {kelasList.map(
+                    (kelas) =>
+                      kelas.isActive && (
+                        <div key={kelas._id} className="mb-3">
+                          <Form.Check id={kelas._id}>
+                            <Form.Check.Input type="checkbox" />
+                            <Form.Check.Label>{kelas.nama}</Form.Check.Label>
+                          </Form.Check>
+                        </div>
+                      )
+                  )}
+                </Form>
               </Form.Group>
             </Col>
           </Row>
